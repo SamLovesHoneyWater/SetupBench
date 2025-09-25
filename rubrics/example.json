@@ -1,0 +1,54 @@
+{
+  "repo": "example_project",
+  "tests": [
+    {
+      "id": "check_java",
+      "type": "command_exists",
+      "params": {
+        "name": "java",
+        "display": "Java"
+      }
+    },
+    {
+      "type": "output_contains",
+      "params": {
+        "command": "java -version",
+        "contains": ["11", "12", "13", "17"]
+      },
+      "timeout": 5,
+      "requires": ["check_java"]
+    },
+    {
+      "type": "file_exists",
+      "params": {
+        "path": "build.gradle"
+      }
+    },
+    {
+      "type": "dir_exists",
+      "params": {
+        "path": "spec"
+      }
+    },
+    {
+      "type": "env_var",
+      "params": {
+        "name": "JAVA_HOME"
+      }
+    },
+    {
+      "type": "file_contains",
+      "params": {
+        "path": ".ruby-version",
+        "contains": ["jruby-9.2", "jruby-9.3"]
+      }
+    },
+    {
+      "type": "run_command",
+      "params": {
+        "command": "jruby -S gem -v"
+      },
+      "timeout": 60
+    }
+  ]
+}
