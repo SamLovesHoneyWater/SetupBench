@@ -9,7 +9,7 @@ The Python script evaluates machine-generated Dockerfiles using JSON-based rubri
 
 - **Multiple Test Types**: Supports 7 different types of tests
 - **Dependency Management**: Tests can depend on other tests passing first
-- **Comprehensive Scoring**: Each test scores 1 for pass, 0 for fail
+- **Flexible Scoring**: Each test can have custom scores (default 1) for different importance levels
 - **Detailed Reporting**: JSON output with execution times and detailed results
 - **Clean Resource Management**: Automatically cleans up Docker images after evaluation
 
@@ -63,11 +63,21 @@ The rubric file should follow this structure:
         "parameter": "value"
       },
       "timeout": 30,
+      "score": 2,
       "requires": ["dependency_test_id"]
     }
   ]
 }
 ```
+
+### Common Test Properties
+
+- **`id`** (optional): Unique identifier for the test, used for dependencies
+- **`type`** (required): The type of test to run
+- **`params`** (required): Test-specific parameters
+- **`timeout`** (optional): Maximum execution time in seconds (default: 30)
+- **`score`** (optional): Points awarded for passing this test (default: 1)
+- **`requires`** (optional): Array of test IDs that must pass before this test runs
 
 ### Test Parameters by Type
 
@@ -78,7 +88,8 @@ The rubric file should follow this structure:
   "params": {
     "name": "java",
     "display": "Java Runtime"
-  }
+  },
+  "score": 2
 }
 ```
 
@@ -90,7 +101,8 @@ The rubric file should follow this structure:
     "command": "java -version",
     "contains": ["11", "17", "21"]
   },
-  "timeout": 10
+  "timeout": 10,
+  "score": 1
 }
 ```
 

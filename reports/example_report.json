@@ -1,0 +1,72 @@
+{
+  "repo": "example",
+  "dockerfile": "artifacts\\example.dockerfile",
+  "rubric": "rubrics\\example.json",
+  "summary": {
+    "total_tests": 7,
+    "passed_tests": 7,
+    "failed_tests": 0,
+    "total_score": 11,
+    "max_score": 11,
+    "success_rate": 1.0,
+    "total_execution_time": 9.163835048675537
+  },
+  "test_results": [
+    {
+      "test_id": "check_java",
+      "test_type": "command_exists",
+      "passed": true,
+      "score": 2,
+      "message": "Command 'Java' found",
+      "execution_time": 0.9467689990997314
+    },
+    {
+      "test_id": "output_contains_-6944722174093890824",
+      "test_type": "output_contains",
+      "passed": true,
+      "score": 2,
+      "message": "Output contains: 12, 17",
+      "execution_time": 0.9285173416137695
+    },
+    {
+      "test_id": "file_exists_-5610631821404134003",
+      "test_type": "file_exists",
+      "passed": true,
+      "score": 1,
+      "message": "File 'build.gradle' exists",
+      "execution_time": 0.6812973022460938
+    },
+    {
+      "test_id": "dir_exists_7560756060365367994",
+      "test_type": "dir_exists",
+      "passed": true,
+      "score": 1,
+      "message": "Directory 'spec' exists",
+      "execution_time": 0.7928714752197266
+    },
+    {
+      "test_id": "env_var_JAVA_HOME",
+      "test_type": "env_var",
+      "passed": true,
+      "score": 2,
+      "message": "Environment variable 'JAVA_HOME' is set",
+      "execution_time": 0.7683815956115723
+    },
+    {
+      "test_id": "file_contains_4445913834127436335",
+      "test_type": "file_contains",
+      "passed": true,
+      "score": 1,
+      "message": "File contains: jruby-9.3",
+      "execution_time": 1.5083632469177246
+    },
+    {
+      "test_id": "run_command_-2872597521247927832",
+      "test_type": "run_command",
+      "passed": true,
+      "score": 2,
+      "message": "Command executed successfully",
+      "execution_time": 3.537635087966919
+    }
+  ]
+}

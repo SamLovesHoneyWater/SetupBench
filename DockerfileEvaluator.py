@@ -44,6 +44,7 @@ class DockerfileEvaluator:
         self.container_name = f"eval_{repo_name}_{int(time.time())}"
         self.image_name = f"eval_{repo_name}:latest"
         self.results: List[TestResult] = []
+        self.tests: List[Dict[str, Any]] = []
         
     def load_rubric(self) -> Dict[str, Any]:
         """Load and parse the JSON rubric file"""
@@ -119,12 +120,13 @@ class DockerfileEvaluator:
         command_name = params.get('name', '')
         display_name = params.get('display', command_name)
         test_id = test.get('id', f"command_exists_{command_name}")
+        test_score = test.get('score', 1)
         
         success, stdout, stderr = self.run_docker_command(f"command -v {command_name}")
         
         execution_time = time.time() - start_time
         passed = success and stdout.strip() != ""
-        score = 1 if passed else 0
+        score = test_score if passed else 0
         message = f"Command '{display_name}' {'found' if passed else 'not found'}"
         
         return TestResult(test_id, "command_exists", passed, score, message, execution_time)
@@ -137,6 +139,7 @@ class DockerfileEvaluator:
         contains_list = params.get('contains', [])
         timeout = test.get('timeout', 30)
         test_id = test.get('id', f"output_contains_{hash(command)}")
+        test_score = test.get('score', 1)
         
         success, stdout, stderr = self.run_docker_command(command, timeout)
         
@@ -150,7 +153,7 @@ class DockerfileEvaluator:
         output_text = stdout + stderr
         found_matches = [item for item in contains_list if str(item) in output_text]
         passed = len(found_matches) > 0
-        score = 1 if passed else 0
+        score = test_score if passed else 0
         
         if passed:
             message = f"Output contains: {', '.join(map(str, found_matches))}"
@@ -165,12 +168,13 @@ class DockerfileEvaluator:
         params = test.get('params', {})
         file_path = params.get('path', '')
         test_id = test.get('id', f"file_exists_{hash(file_path)}")
+        test_score = test.get('score', 1)
         
         success, stdout, stderr = self.run_docker_command(f"test -f '{file_path}'")
         
         execution_time = time.time() - start_time
         passed = success
-        score = 1 if passed else 0
+        score = test_score if passed else 0
         message = f"File '{file_path}' {'exists' if passed else 'does not exist'}"
         
         return TestResult(test_id, "file_exists", passed, score, message, execution_time)
@@ -181,12 +185,13 @@ class DockerfileEvaluator:
         params = test.get('params', {})
         dir_path = params.get('path', '')
         test_id = test.get('id', f"dir_exists_{hash(dir_path)}")
+        test_score = test.get('score', 1)
         
         success, stdout, stderr = self.run_docker_command(f"test -d '{dir_path}'")
         
         execution_time = time.time() - start_time
         passed = success
-        score = 1 if passed else 0
+        score = test_score if passed else 0
         message = f"Directory '{dir_path}' {'exists' if passed else 'does not exist'}"
         
         return TestResult(test_id, "dir_exists", passed, score, message, execution_time)
@@ -197,12 +202,13 @@ class DockerfileEvaluator:
         params = test.get('params', {})
         var_name = params.get('name', '')
         test_id = test.get('id', f"env_var_{var_name}")
+        test_score = test.get('score', 1)
         
         success, stdout, stderr = self.run_docker_command(f"test -n \"${var_name}\"")
         
         execution_time = time.time() - start_time
         passed = success
-        score = 1 if passed else 0
+        score = test_score if passed else 0
         message = f"Environment variable '{var_name}' {'is set' if passed else 'is not set'}"
         
         return TestResult(test_id, "env_var", passed, score, message, execution_time)
@@ -214,6 +220,7 @@ class DockerfileEvaluator:
         file_path = params.get('path', '')
         contains_list = params.get('contains', [])
         test_id = test.get('id', f"file_contains_{hash(file_path)}")
+        test_score = test.get('score', 1)
         
         # First check if file exists
         success, stdout, stderr = self.run_docker_command(f"test -f '{file_path}'")
@@ -234,7 +241,7 @@ class DockerfileEvaluator:
         file_content = stdout
         found_matches = [item for item in contains_list if str(item) in file_content]
         passed = len(found_matches) > 0
-        score = 1 if passed else 0
+        score = test_score if passed else 0
         
         if passed:
             message = f"File contains: {', '.join(map(str, found_matches))}"
@@ -250,12 +257,13 @@ class DockerfileEvaluator:
         command = params.get('command', '')
         timeout = test.get('timeout', 30)
         test_id = test.get('id', f"run_command_{hash(command)}")
+        test_score = test.get('score', 1)
         
         success, stdout, stderr = self.run_docker_command(command, timeout)
         
         execution_time = time.time() - start_time
         passed = success
-        score = 1 if passed else 0
+        score = test_score if passed else 0
         
         if passed:
             message = f"Command executed successfully"
@@ -351,6 +359,7 @@ class DockerfileEvaluator:
         total_tests = len(self.results)
         passed_tests = sum(1 for r in self.results if r.passed)
         total_score = sum(r.score for r in self.results)
+        max_score = sum(test.get('score', 1) for test in self.tests)
         total_time = sum(r.execution_time for r in self.results)
         
         report = {
@@ -362,7 +371,7 @@ class DockerfileEvaluator:
                 "passed_tests": passed_tests,
                 "failed_tests": total_tests - passed_tests,
                 "total_score": total_score,
-                "max_score": total_tests,
+                "max_score": max_score,
                 "success_rate": passed_tests / total_tests if total_tests > 0 else 0,
                 "total_execution_time": total_time
             },
@@ -391,6 +400,7 @@ class DockerfileEvaluator:
         # Load rubric
         rubric = self.load_rubric()
         tests = rubric.get('tests', [])
+        self.tests = tests  # Store tests for report generation
         
         if not tests:
             print("No tests found in rubric")

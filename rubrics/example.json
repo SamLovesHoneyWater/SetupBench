@@ -7,7 +7,8 @@
       "params": {
         "name": "java",
         "display": "Java"
-      }
+      },
+      "score": 2
     },
     {
       "type": "output_contains",
@@ -16,39 +17,45 @@
         "contains": ["11", "12", "13", "17"]
       },
       "timeout": 5,
-      "requires": ["check_java"]
+      "requires": ["check_java"],
+      "score": 2
     },
     {
       "type": "file_exists",
       "params": {
         "path": "build.gradle"
-      }
+      },
+      "score": 1
     },
     {
       "type": "dir_exists",
       "params": {
         "path": "spec"
-      }
+      },
+      "score": 1
     },
     {
       "type": "env_var",
       "params": {
         "name": "JAVA_HOME"
-      }
+      },
+      "score": 2
     },
     {
       "type": "file_contains",
       "params": {
         "path": ".ruby-version",
         "contains": ["jruby-9.2", "jruby-9.3"]
-      }
+      },
+      "score": 1
     },
     {
       "type": "run_command",
       "params": {
         "command": "jruby -S gem -v"
       },
-      "timeout": 60
+      "timeout": 60,
+      "score": 2
     }
   ]
 }
