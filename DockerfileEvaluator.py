@@ -70,7 +70,7 @@ class DockerfileEvaluator:
                 "-f", str(self.dockerfile_path),
                 "."
             ]
-            result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
             
             if result.returncode == 0:
                 print("✓ Docker image built successfully")
@@ -82,13 +82,13 @@ class DockerfileEvaluator:
                 return False
                 
         except subprocess.TimeoutExpired:
-            print("✗ Docker build timed out (5 minutes)")
+            print("✗ Docker build timed out (10 minutes)")
             return False
         except Exception as e:
             print(f"✗ Error building Docker image: {e}")
             return False
     
-    def run_docker_command(self, command: str, timeout: int = 30) -> tuple[bool, str, str]:
+    def run_docker_command(self, command: str, timeout: int = -1) -> tuple[bool, str, str]:
         """Run a command inside the Docker container"""
         try:
             cmd = [
@@ -97,14 +97,19 @@ class DockerfileEvaluator:
                 self.image_name,
                 "sh", "-c", command
             ]
-            
-            result = subprocess.run(
-                cmd, 
-                capture_output=True, 
-                text=True, 
-                timeout=timeout
+            if timeout != -1:
+                result = subprocess.run(
+                    cmd,
+                    capture_output=True,
+                    text=True,
+                    timeout=timeout
             )
-            
+            else:
+                result = subprocess.run(
+                    cmd,
+                    capture_output=True,
+                    text=True
+            )            
             success = result.returncode == 0
             return success, result.stdout, result.stderr
             

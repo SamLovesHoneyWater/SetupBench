@@ -9,7 +9,7 @@
     "total_score": 11,
     "max_score": 11,
     "success_rate": 1.0,
-    "total_execution_time": 9.163835048675537
+    "total_execution_time": 8.597371816635132
   },
   "test_results": [
     {
@@ -18,31 +18,31 @@
       "passed": true,
       "score": 2,
       "message": "Command 'Java' found",
-      "execution_time": 0.9467689990997314
+      "execution_time": 0.8319740295410156
     },
     {
-      "test_id": "output_contains_-6944722174093890824",
+      "test_id": "output_contains_711204439031605948",
       "test_type": "output_contains",
       "passed": true,
       "score": 2,
       "message": "Output contains: 12, 17",
-      "execution_time": 0.9285173416137695
+      "execution_time": 0.9529941082000732
     },
     {
-      "test_id": "file_exists_-5610631821404134003",
+      "test_id": "file_exists_-4103894550883763747",
       "test_type": "file_exists",
       "passed": true,
       "score": 1,
       "message": "File 'build.gradle' exists",
-      "execution_time": 0.6812973022460938
+      "execution_time": 0.6648404598236084
     },
     {
-      "test_id": "dir_exists_7560756060365367994",
+      "test_id": "dir_exists_-7661927714165301279",
       "test_type": "dir_exists",
       "passed": true,
       "score": 1,
       "message": "Directory 'spec' exists",
-      "execution_time": 0.7928714752197266
+      "execution_time": 0.6158292293548584
     },
     {
       "test_id": "env_var_JAVA_HOME",
@@ -50,23 +50,23 @@
       "passed": true,
       "score": 2,
       "message": "Environment variable 'JAVA_HOME' is set",
-      "execution_time": 0.7683815956115723
+      "execution_time": 0.7647185325622559
     },
     {
-      "test_id": "file_contains_4445913834127436335",
+      "test_id": "file_contains_-4772560299593610262",
       "test_type": "file_contains",
       "passed": true,
       "score": 1,
       "message": "File contains: jruby-9.3",
-      "execution_time": 1.5083632469177246
+      "execution_time": 1.3621628284454346
     },
     {
-      "test_id": "run_command_-2872597521247927832",
+      "test_id": "run_command_-776634565884243956",
       "test_type": "run_command",
       "passed": true,
       "score": 2,
       "message": "Command executed successfully",
-      "execution_time": 3.537635087966919
+      "execution_time": 3.4048526287078857
     }
   ]
 }

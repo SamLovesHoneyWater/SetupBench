@@ -16,28 +16,17 @@ The Python script evaluates machine-generated Dockerfiles using JSON-based rubri
 ## Supported Test Types
 
 1. **`command_exists`**: Check if a command is available
-2. **`output_contains`**: Run a command and check if output contains specific strings
-3. **`file_exists`**: Check if a file exists
-4. **`dir_exists`**: Check if a directory exists
-5. **`env_var`**: Check if an environment variable is set
-6. **`file_contains`**: Check if a file contains specific strings
-7. **`run_command`**: Run a command and check if it succeeds
+2. **`env_var`**: Check if an environment variable is set
+3. **`dir_exists`**: Check if a directory exists
+4. **`file_exists`**: Check if a file exists
+5. **`file_contains`**: Check if a file contains specific strings
+6. **`run_command`**: Run a command and check if it succeeds
+7. **`output_contains`**: Run a command and check if output contains specific strings
 
 ## Usage
 
-### Basic Usage
 ```bash
-python evaluate_dockerfile.py --dockerfile path/to/Dockerfile --repo repo_name
-```
-
-### With Custom Rubric
-```bash
-python evaluate_dockerfile.py --dockerfile path/to/Dockerfile --repo repo_name --rubric path/to/custom_rubric.json
-```
-
-### Save Results to File
-```bash
-python evaluate_dockerfile.py --dockerfile path/to/Dockerfile --repo repo_name --output results.json --verbose
+python DockerfileEvaluator.py --dockerfile artifacts/example.dockerfile --repo example --output reports/example_report.json --verbose
 ```
 
 ## Command Line Arguments
