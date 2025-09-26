@@ -8,7 +8,7 @@ This script evaluates machine-generated Dockerfiles by:
 3. Running tests inside the container and scoring them (1 for pass, 0 for fail)
 
 Usage:
-    python evaluate_dockerfile.py --dockerfile <path> --repo <name> [--rubric <path>]
+    python DockerfileEvaluator.py --dockerfile <path> --repo <name> [--rubric <path>] [--output <path>] [--verbose]
 """
 
 import argparse
