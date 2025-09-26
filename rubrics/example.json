@@ -5,8 +5,7 @@
       "id": "check_java",
       "type": "command_exists",
       "params": {
-        "name": "java",
-        "display": "Java"
+        "name": "java"
       },
       "score": 2
     },
@@ -21,21 +20,25 @@
       "score": 2
     },
     {
-      "type": "file_exists",
+      "type": "files_exist",
       "params": {
-        "path": "build.gradle"
+        "paths": [
+          "build.gradle"
+        ]
       },
       "score": 1
     },
     {
-      "type": "dir_exists",
+      "type": "dirs_exist",
       "params": {
-        "path": "spec"
+        "paths": [
+          "spec"
+        ]
       },
       "score": 1
     },
     {
-      "type": "env_var",
+      "type": "envvar_set",
       "params": {
         "name": "JAVA_HOME"
       },

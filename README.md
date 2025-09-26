@@ -16,9 +16,9 @@ The Python script evaluates machine-generated Dockerfiles using JSON-based rubri
 ## Supported Test Types
 
 1. **`command_exists`**: Check if a command is available
-2. **`env_var`**: Check if an environment variable is set
-3. **`dir_exists`**: Check if a directory exists
-4. **`file_exists`**: Check if a file exists
+2. **`envvar_set`**: Check if an environment variable is set
+3. **`dirs_exist`**: Check if a directory exists
+4. **`files_exist`**: Check if a file exists
 5. **`file_contains`**: Check if a file contains specific strings
 6. **`run_command`**: Run a command and check if it succeeds
 7. **`output_contains`**: Run a command and check if output contains specific strings
@@ -75,8 +75,7 @@ The rubric file should follow this structure:
 {
   "type": "command_exists",
   "params": {
-    "name": "java",
-    "display": "Java Runtime"
+    "name": "java"
   },
   "score": 2
 }
@@ -95,30 +94,34 @@ The rubric file should follow this structure:
 }
 ```
 
-#### `file_exists`
+#### `files_exist`
 ```json
 {
-  "type": "file_exists",
+  "type": "files_exist",
   "params": {
-    "path": "/path/to/file"
+    "paths": [
+      "/path/to/file"
+    ]
   }
 }
 ```
 
-#### `dir_exists`
+#### `dirs_exist`
 ```json
 {
-  "type": "dir_exists",
+  "type": "dirs_exist",
   "params": {
-    "path": "/path/to/directory"
+    "paths": [
+      "/path/to/directory"
+    ]
   }
 }
 ```
 
-#### `env_var`
+#### `envvar_set`
 ```json
 {
-  "type": "env_var",
+  "type": "envvar_set",
   "params": {
     "name": "JAVA_HOME"
   }

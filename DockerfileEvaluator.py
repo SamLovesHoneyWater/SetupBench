@@ -123,7 +123,6 @@ class DockerfileEvaluator:
         start_time = time.time()
         params = test.get('params', {})
         command_name = params.get('name', '')
-        display_name = params.get('display', command_name)
         test_id = test.get('id', f"command_exists_{command_name}")
         test_score = test.get('score', 1)
         
@@ -132,7 +131,7 @@ class DockerfileEvaluator:
         execution_time = time.time() - start_time
         passed = success and stdout.strip() != ""
         score = test_score if passed else 0
-        message = f"Command '{display_name}' {'found' if passed else 'not found'}"
+        message = f"Command '{command_name}' {'found' if passed else 'not found'}"
         
         return TestResult(test_id, "command_exists", passed, score, message, execution_time)
     
@@ -167,46 +166,54 @@ class DockerfileEvaluator:
         
         return TestResult(test_id, "output_contains", passed, score, message, execution_time)
     
-    def test_file_exists(self, test: Dict[str, Any]) -> TestResult:
-        """Test if a file exists in the container"""
+    def test_files_exist(self, test: Dict[str, Any]) -> TestResult:
+        """Test if files exist in the container"""
         start_time = time.time()
         params = test.get('params', {})
-        file_path = params.get('path', '')
-        test_id = test.get('id', f"file_exists_{hash(file_path)}")
+        file_paths = params.get('path', [])
+        test_id = test.get('id', f"files_exist_{hash(tuple(file_paths))}")
         test_score = test.get('score', 1)
-        
-        success, stdout, stderr = self.run_docker_command(f"test -f '{file_path}'")
+
+        passed = True
+        for file_path in file_paths:
+            success, stdout, stderr = self.run_docker_command(f"test -f '{file_path}'")
+            if not success:
+                passed = False
+                break
         
         execution_time = time.time() - start_time
-        passed = success
         score = test_score if passed else 0
-        message = f"File '{file_path}' {'exists' if passed else 'does not exist'}"
-        
-        return TestResult(test_id, "file_exists", passed, score, message, execution_time)
-    
-    def test_dir_exists(self, test: Dict[str, Any]) -> TestResult:
+        message = f"Files '{', '.join(file_paths)}' {'exist' if passed else 'do not exist'}"
+
+        return TestResult(test_id, "files_exist", passed, score, message, execution_time)
+
+    def test_dirs_exist(self, test: Dict[str, Any]) -> TestResult:
         """Test if a directory exists in the container"""
         start_time = time.time()
         params = test.get('params', {})
-        dir_path = params.get('path', '')
-        test_id = test.get('id', f"dir_exists_{hash(dir_path)}")
+        dir_paths = params.get('path', [])
+        test_id = test.get('id', f"dirs_exist_{hash(tuple(dir_paths))}")
         test_score = test.get('score', 1)
-        
-        success, stdout, stderr = self.run_docker_command(f"test -d '{dir_path}'")
-        
+
+        passed = True
+        for dir_path in dir_paths:
+            success, stdout, stderr = self.run_docker_command(f"test -d '{dir_path}'")
+            if not success:
+                passed = False
+                break
+
         execution_time = time.time() - start_time
-        passed = success
         score = test_score if passed else 0
-        message = f"Directory '{dir_path}' {'exists' if passed else 'does not exist'}"
-        
-        return TestResult(test_id, "dir_exists", passed, score, message, execution_time)
-    
-    def test_env_var(self, test: Dict[str, Any]) -> TestResult:
+        message = f"Directories '{', '.join(dir_paths)}' {'exist' if passed else 'do not exist'}"
+
+        return TestResult(test_id, "dirs_exist", passed, score, message, execution_time)
+
+    def test_envvar_set(self, test: Dict[str, Any]) -> TestResult:
         """Test if an environment variable is set"""
         start_time = time.time()
         params = test.get('params', {})
         var_name = params.get('name', '')
-        test_id = test.get('id', f"env_var_{var_name}")
+        test_id = test.get('id', f"envvar_set_{var_name}")
         test_score = test.get('score', 1)
         
         success, stdout, stderr = self.run_docker_command(f"test -n \"${var_name}\"")
@@ -216,7 +223,7 @@ class DockerfileEvaluator:
         score = test_score if passed else 0
         message = f"Environment variable '{var_name}' {'is set' if passed else 'is not set'}"
         
-        return TestResult(test_id, "env_var", passed, score, message, execution_time)
+        return TestResult(test_id, "envvar_set", passed, score, message, execution_time)
     
     def test_file_contains(self, test: Dict[str, Any]) -> TestResult:
         """Test if a file contains specific strings"""
@@ -295,9 +302,9 @@ class DockerfileEvaluator:
         test_methods = {
             'command_exists': self.test_command_exists,
             'output_contains': self.test_output_contains,
-            'file_exists': self.test_file_exists,
-            'dir_exists': self.test_dir_exists,
-            'env_var': self.test_env_var,
+            'files_exist': self.test_files_exist,
+            'dirs_exist': self.test_dirs_exist,
+            'envvar_set': self.test_envvar_set,
             'file_contains': self.test_file_contains,
             'run_command': self.test_run_command,
         }

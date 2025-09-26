@@ -9,7 +9,7 @@
     "total_score": 11,
     "max_score": 11,
     "success_rate": 1.0,
-    "total_execution_time": 8.597371816635132
+    "total_execution_time": 7.119911193847656
   },
   "test_results": [
     {
@@ -17,56 +17,56 @@
       "test_type": "command_exists",
       "passed": true,
       "score": 2,
-      "message": "Command 'Java' found",
-      "execution_time": 0.8319740295410156
+      "message": "Command 'java' found",
+      "execution_time": 0.8886294364929199
     },
     {
-      "test_id": "output_contains_711204439031605948",
+      "test_id": "output_contains_288337105962173933",
       "test_type": "output_contains",
       "passed": true,
       "score": 2,
       "message": "Output contains: 12, 17",
-      "execution_time": 0.9529941082000732
+      "execution_time": 0.8848600387573242
     },
     {
-      "test_id": "file_exists_-4103894550883763747",
-      "test_type": "file_exists",
+      "test_id": "files_exist_5740354900026072187",
+      "test_type": "files_exist",
       "passed": true,
       "score": 1,
-      "message": "File 'build.gradle' exists",
-      "execution_time": 0.6648404598236084
+      "message": "Files '' exist",
+      "execution_time": 0.0
     },
     {
-      "test_id": "dir_exists_-7661927714165301279",
-      "test_type": "dir_exists",
+      "test_id": "dirs_exist_5740354900026072187",
+      "test_type": "dirs_exist",
       "passed": true,
       "score": 1,
-      "message": "Directory 'spec' exists",
-      "execution_time": 0.6158292293548584
+      "message": "Directories '' exist",
+      "execution_time": 0.0
     },
     {
-      "test_id": "env_var_JAVA_HOME",
-      "test_type": "env_var",
+      "test_id": "envvar_set_JAVA_HOME",
+      "test_type": "envvar_set",
       "passed": true,
       "score": 2,
       "message": "Environment variable 'JAVA_HOME' is set",
-      "execution_time": 0.7647185325622559
+      "execution_time": 0.6573450565338135
     },
     {
-      "test_id": "file_contains_-4772560299593610262",
+      "test_id": "file_contains_-4175620046906156080",
       "test_type": "file_contains",
       "passed": true,
       "score": 1,
       "message": "File contains: jruby-9.3",
-      "execution_time": 1.3621628284454346
+      "execution_time": 1.3054139614105225
     },
     {
-      "test_id": "run_command_-776634565884243956",
+      "test_id": "run_command_8576011880598163652",
       "test_type": "run_command",
       "passed": true,
       "score": 2,
       "message": "Command executed successfully",
-      "execution_time": 3.4048526287078857
+      "execution_time": 3.383662700653076
     }
   ]
 }
