@@ -3,70 +3,13 @@
   "dockerfile": "artifacts\\example.dockerfile",
   "rubric": "rubrics\\example.json",
   "summary": {
-    "total_tests": 7,
-    "passed_tests": 7,
+    "total_tests": 0,
+    "passed_tests": 0,
     "failed_tests": 0,
-    "total_score": 11,
+    "total_score": 0,
     "max_score": 11,
-    "success_rate": 1.0,
-    "total_execution_time": 7.119911193847656
+    "success_rate": 0,
+    "total_execution_time": 0
   },
-  "test_results": [
-    {
-      "test_id": "check_java",
-      "test_type": "command_exists",
-      "passed": true,
-      "score": 2,
-      "message": "Command 'java' found",
-      "execution_time": 0.8886294364929199
-    },
-    {
-      "test_id": "output_contains_288337105962173933",
-      "test_type": "output_contains",
-      "passed": true,
-      "score": 2,
-      "message": "Output contains: 12, 17",
-      "execution_time": 0.8848600387573242
-    },
-    {
-      "test_id": "files_exist_5740354900026072187",
-      "test_type": "files_exist",
-      "passed": true,
-      "score": 1,
-      "message": "Files '' exist",
-      "execution_time": 0.0
-    },
-    {
-      "test_id": "dirs_exist_5740354900026072187",
-      "test_type": "dirs_exist",
-      "passed": true,
-      "score": 1,
-      "message": "Directories '' exist",
-      "execution_time": 0.0
-    },
-    {
-      "test_id": "envvar_set_JAVA_HOME",
-      "test_type": "envvar_set",
-      "passed": true,
-      "score": 2,
-      "message": "Environment variable 'JAVA_HOME' is set",
-      "execution_time": 0.6573450565338135
-    },
-    {
-      "test_id": "file_contains_-4175620046906156080",
-      "test_type": "file_contains",
-      "passed": true,
-      "score": 1,
-      "message": "File contains: jruby-9.3",
-      "execution_time": 1.3054139614105225
-    },
-    {
-      "test_id": "run_command_8576011880598163652",
-      "test_type": "run_command",
-      "passed": true,
-      "score": 2,
-      "message": "Command executed successfully",
-      "execution_time": 3.383662700653076
-    }
-  ]
+  "test_results": []
 }
